@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Plus, Send, ShieldCheck, History } from 'lucide-react'
+import { Zap, Send, ShieldCheck, History, Key } from 'lucide-react'
 import Card from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
@@ -46,62 +46,68 @@ export default function Dashboard() {
                 {/* Main Content */}
                 <div className="flex-1 space-y-8">
                     <header>
-                        <h1 className="text-4xl font-display font-bold">Dashboard</h1>
-                        <p className="text-zinc-500 mt-2">Manage your secure ZK-vvm payments</p>
+                        <h1 className="text-4xl font-display font-bold text-gradient">Virtual State</h1>
+                        <p className="text-zinc-500 mt-2">Manage your infrastructure-less blockchain interactions</p>
                     </header>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <Card className="flex flex-col gap-4">
                             <div className="flex items-center justify-between">
-                                <span className="text-sm font-medium text-zinc-400">Total Volume</span>
+                                <span className="text-sm font-medium text-zinc-400">Virtual Balance</span>
                                 <div className="p-2 bg-brand/10 rounded-lg">
                                     <ShieldCheck size={18} className="text-brand" />
                                 </div>
                             </div>
-                            <p className="text-3xl font-display font-bold">$0.00</p>
-                            <p className="text-xs text-brand font-medium">+0% from last month</p>
+                            <p className="text-3xl font-display font-bold">0.00 <span className="text-zinc-500 text-lg">VVM</span></p>
+                            <p className="text-xs text-brand font-medium">Synced with EMVM Executor</p>
                         </Card>
 
                         <Card className="flex flex-col gap-4">
                             <div className="flex items-center justify-between">
-                                <span className="text-sm font-medium text-zinc-400">Total Payments</span>
+                                <span className="text-sm font-medium text-zinc-400">Generated Proofs</span>
                                 <div className="p-2 bg-zinc-800 rounded-lg">
                                     <History size={18} className="text-zinc-400" />
                                 </div>
                             </div>
                             <p className="text-3xl font-display font-bold">0</p>
-                            <p className="text-xs text-zinc-500">Last payment: N/A</p>
+                            <p className="text-xs text-zinc-500">Virtual state updates: 0</p>
                         </Card>
                     </div>
 
                     <section className="space-y-4">
-                        <h3 className="text-xl font-display font-semibold">Recent Transactions</h3>
+                        <div className="flex items-center justify-between">
+                            <h3 className="text-xl font-display font-semibold">Relayed Transactions</h3>
+                            <Button variant="outline" size="sm" className="gap-2">
+                                <Key size={14} />
+                                Export Viewing Key
+                            </Button>
+                        </div>
                         <Card className="p-0 overflow-hidden">
                             <div className="p-8 text-center text-zinc-500 flex flex-col items-center gap-2">
                                 <History size={32} strokeWidth={1.5} />
-                                <p>No transactions found</p>
+                                <p>No virtual state updates recorded</p>
                             </div>
                         </Card>
                     </section>
                 </div>
 
-                {/* Sidebar: Creation Form */}
+                {/* Sidebar: ZK Flow Initiation */}
                 <div className="w-full md:w-96">
                     <Card className="sticky top-32">
                         <h3 className="text-xl font-display font-semibold mb-6 flex items-center gap-2">
-                            <Plus size={20} className="text-brand" />
-                            Create Payment
+                            <Zap size={20} className="text-brand" />
+                            Initiate ZK Flow
                         </h3>
                         <form onSubmit={handleCreatePayment} className="space-y-6">
                             <Input
-                                label="Amount (ETH)"
+                                label="Amount (VVM)"
                                 placeholder="0.00"
                                 value={amount}
                                 onChange={(e) => setAmount(e.target.value)}
                                 required
                             />
                             <Input
-                                label="Recipient Address"
+                                label="Recipient Virtual Address"
                                 placeholder="0x..."
                                 value={recipient}
                                 onChange={(e) => setRecipient(e.target.value)}
@@ -109,12 +115,12 @@ export default function Dashboard() {
                             />
                             <div className="p-4 bg-brand/5 border border-brand/10 rounded-xl space-y-2">
                                 <div className="flex items-center gap-2 text-brand text-xs font-bold uppercase tracking-wider">
-                                    <Lock size={12} />
-                                    ZK-Compliance Layer
+                                    <ShieldCheck size={12} />
+                                    Off-Chain Prover
                                 </div>
                                 <p className="text-xs text-zinc-400 leading-relaxed">
-                                    Every transaction generates a unique zero-knowledge proof
-                                    ensuring privacy and regulatory compliance.
+                                    Proofs are generated locally to obscure sender, receiver, and amount.
+                                    Transactions are relayed gasless via Fishers.
                                 </p>
                             </div>
                             <Button
@@ -122,7 +128,7 @@ export default function Dashboard() {
                                 className="w-full gap-2"
                                 disabled={isCreating}
                             >
-                                {isCreating ? 'Generating Proof...' : 'Send Securely'}
+                                {isCreating ? 'Computing Proof...' : 'Initiate Secure Flow'}
                                 <Send size={16} />
                             </Button>
                         </form>
@@ -131,6 +137,7 @@ export default function Dashboard() {
             </div>
         </div>
     )
+
 }
 
 function Lock({ size, className }: { size?: number, className?: string }) {

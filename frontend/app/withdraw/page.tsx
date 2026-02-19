@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowLeft, Download, ShieldCheck, Key, AlertCircle } from 'lucide-react'
+import { ArrowLeft, Zap, ShieldCheck, Key, AlertCircle } from 'lucide-react'
 import Card from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
@@ -41,7 +41,7 @@ export default function Withdraw() {
         <div className="max-w-2xl mx-auto px-6 py-24">
             <Link href="/dashboard" className="inline-flex items-center gap-2 text-zinc-500 hover:text-white transition-colors mb-8 group">
                 <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-                Back to Dashboard
+                Back to Virtual Dashboard
             </Link>
 
             <AnimatePresence mode="wait">
@@ -54,8 +54,8 @@ export default function Withdraw() {
                     >
                         <Card className="p-10">
                             <div className="mb-8">
-                                <h1 className="text-3xl font-display font-bold mb-2">Withdraw Funds</h1>
-                                <p className="text-zinc-500">Enter your ZK-proof ID to verify and withdraw funds.</p>
+                                <h1 className="text-3xl font-display font-bold mb-2">Fisher Relay</h1>
+                                <p className="text-zinc-500">Submit your off-chain proof for EMVM executor verification.</p>
                             </div>
 
                             <form onSubmit={handleWithdraw} className="space-y-6">
@@ -70,14 +70,14 @@ export default function Withdraw() {
                                 <div className="flex items-start gap-3 p-4 bg-zinc-900 rounded-xl border border-zinc-800">
                                     <AlertCircle size={18} className="text-zinc-500 mt-0.5" />
                                     <p className="text-xs text-zinc-500 leading-relaxed">
-                                        Withdrawals are processed through the evvm.org ZK-vvm circuit.
-                                        Ensure you have the correct proof ID associated with your address.
+                                        Your transaction will be relayed gasless to the EVVM executor contract.
+                                        Successful execution will update the virtual state securely.
                                     </p>
                                 </div>
 
                                 <Button type="submit" className="w-full gap-2" size="lg">
-                                    Verify & Withdraw
-                                    <Download size={18} />
+                                    Initiate Relay Execution
+                                    <Zap size={18} />
                                 </Button>
                             </form>
                         </Card>
@@ -94,12 +94,12 @@ export default function Withdraw() {
                         <div className="relative">
                             <div className="w-24 h-24 rounded-full border-4 border-zinc-800 border-t-brand animate-spin" />
                             <div className="absolute inset-0 flex items-center justify-center">
-                                <ShieldCheck size={32} className="text-brand" />
+                                <Zap size={32} className="text-brand" />
                             </div>
                         </div>
                         <div className="text-center space-y-2">
-                            <h2 className="text-2xl font-display font-semibold">Verifying Proof</h2>
-                            <p className="text-zinc-500">Contacting evvm.org compliance circuits...</p>
+                            <h2 className="text-2xl font-display font-semibold text-gradient">Executing Relay</h2>
+                            <p className="text-zinc-500 font-mono text-xs">Fisher relaying proof to EVVM executor...</p>
                         </div>
                     </motion.div>
                 )}
@@ -117,12 +117,12 @@ export default function Withdraw() {
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <h2 className="text-3xl font-display font-bold">Transfer Successful</h2>
-                            <p className="text-zinc-400">Funds have been released to your wallet address.</p>
+                            <h2 className="text-3xl font-display font-bold">Virtual State Updated</h2>
+                            <p className="text-zinc-400">The EMVM executor has verified the proof and settled the transaction.</p>
                         </div>
                         <div className="flex justify-center pt-4">
                             <Button onClick={() => setStep('input')} variant="outline">
-                                Perform another withdrawal
+                                Initiate another relay
                             </Button>
                         </div>
                     </motion.div>
@@ -130,4 +130,5 @@ export default function Withdraw() {
             </AnimatePresence>
         </div>
     )
+
 }
