@@ -1,9 +1,9 @@
-'use client'
+"use client";
 
-import { motion } from 'framer-motion'
-import { Shield, Zap, Lock, ArrowRight } from 'lucide-react'
-import Button from '@/components/ui/Button'
-import Link from 'next/link'
+import { motion } from "framer-motion";
+import { Shield, Zap, Lock, ArrowRight } from "lucide-react";
+import Button from "@/components/ui/Button";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -46,8 +46,10 @@ export default function Home() {
             transition={{ delay: 0.3, duration: 0.6 }}
             className="mt-8 text-lg leading-8 text-zinc-400 max-w-2xl mx-auto font-medium"
           >
-            A stateless, privacy-focused virtual machine running within a smart contract "executor."
-            Lock ETH into commitments and transfer them securely via off-chain <span className="text-white">zkVVM Notes</span>.
+            A stateless, privacy-focused virtual machine running within a smart
+            contract "executor." Lock ETH into commitments and transfer them
+            securely via off-chain{" "}
+            <span className="text-white">zkVVM Notes</span>.
           </motion.p>
 
           <motion.div
@@ -58,10 +60,13 @@ export default function Home() {
           >
             <Link href="/dashboard">
               <Button size="lg" className="gap-2">
-                Launch Explorer <ArrowRight size={18} />
+                Launch App <ArrowRight size={18} />
               </Button>
             </Link>
-            <Link href="/docs" className="text-sm font-semibold leading-6 text-white hover:text-brand transition-colors">
+            <Link
+              href="/docs"
+              className="text-sm font-semibold leading-6 text-white hover:text-brand transition-colors"
+            >
               Read Mission <span aria-hidden="true">→</span>
             </Link>
           </motion.div>
@@ -73,20 +78,23 @@ export default function Home() {
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
           {[
             {
-              name: 'The Mint (Deposit)',
-              description: 'Lock ETH into the virtual machine by generating a cryptographic commitment. Your identity remains shielded from the start.',
-              icon: Shield
+              name: "The Mint (Deposit)",
+              description:
+                "Lock ETH into the virtual machine by generating a cryptographic commitment. Your identity remains shielded from the start.",
+              icon: Shield,
             },
             {
-              name: 'The Note (Handoff)',
-              description: 'Transfer value securely off-chain. The zkVVM Note represents your assets and can be handed off with zero trace on the blockchain.',
-              icon: Zap
+              name: "The Note (Handoff)",
+              description:
+                "Transfer value securely off-chain. The zkVVM Note represents your assets and can be handed off with zero trace on the blockchain.",
+              icon: Zap,
             },
             {
-              name: 'The Spend (Withdraw)',
-              description: 'Redeem your Note from the zkVVM Executor by generating a ZK-SNARK proof. No link is ever created between deposit and withdrawal.',
-              icon: Lock
-            }
+              name: "The Spend (Withdraw)",
+              description:
+                "Redeem your Note from the zkVVM Executor by generating a ZK-SNARK proof. No link is ever created between deposit and withdrawal.",
+              icon: Lock,
+            },
           ].map((feature, idx) => (
             <motion.div
               key={feature.name}
@@ -97,10 +105,17 @@ export default function Home() {
               className="glass p-8 rounded-3xl group hover:border-brand/20 transition-colors"
             >
               <div className="mb-6 flex h-10 w-10 items-center justify-center rounded-lg bg-brand shadow-[0_0_15px_rgba(0,255,163,0.3)]">
-                <feature.icon className="h-6 w-6 text-black" aria-hidden="true" />
+                <feature.icon
+                  className="h-6 w-6 text-black"
+                  aria-hidden="true"
+                />
               </div>
-              <p className="text-lg font-display font-semibold leading-7 text-white group-hover:text-brand transition-colors">{feature.name}</p>
-              <p className="mt-2 text-sm leading-7 text-zinc-400">{feature.description}</p>
+              <p className="text-lg font-display font-semibold leading-7 text-white group-hover:text-brand transition-colors">
+                {feature.name}
+              </p>
+              <p className="mt-2 text-sm leading-7 text-zinc-400">
+                {feature.description}
+              </p>
             </motion.div>
           ))}
         </div>
@@ -109,33 +124,44 @@ export default function Home() {
       {/* How it Works / The Flow */}
       <div className="mx-auto max-w-7xl px-6 lg:px-8 py-32">
         <div className="mx-auto max-w-2xl text-center mb-20">
-          <h2 className="text-3xl font-display font-bold tracking-tight text-white sm:text-4xl text-gradient">The zkVVM Flow</h2>
-          <p className="mt-4 text-lg text-zinc-400">Decoupling privacy from consensus through a stateless Note-based architecture.</p>
+          <h2 className="text-3xl font-display font-bold tracking-tight text-white sm:text-4xl text-gradient">
+            The zkVVM Flow
+          </h2>
+          <p className="mt-4 text-lg text-zinc-400">
+            Decoupling privacy from consensus through a stateless Note-based
+            architecture.
+          </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
             {[
               {
-                step: '01',
-                title: 'Deposit (Minting)',
-                desc: 'Generate a local Secret and Nullifier. Submit their hashed commitment with 1 ETH to lock funds into the Merkle Vault.'
+                step: "01",
+                title: "Deposit (Minting)",
+                desc: "Generate a local Secret and Nullifier. Submit their hashed commitment with 1 ETH to lock funds into the Merkle Vault.",
               },
               {
-                step: '02',
-                title: 'Handoff (Off-Chain)',
-                desc: 'The zkVVM Note is shared securely off-chain. The blockchain records zero data about this transfer, ensuring absolute privacy.'
+                step: "02",
+                title: "Handoff (Off-Chain)",
+                desc: "The zkVVM Note is shared securely off-chain. The blockchain records zero data about this transfer, ensuring absolute privacy.",
               },
               {
-                step: '03',
-                title: 'Withdraw (Spending)',
-                desc: 'The receiver generates a ZK proof of secret knowledge to unlock funds to a new address. The Nullifier is recorded to prevent double-spending.'
-              }
+                step: "03",
+                title: "Withdraw (Spending)",
+                desc: "The receiver generates a ZK proof of secret knowledge to unlock funds to a new address. The Nullifier is recorded to prevent double-spending.",
+              },
             ].map((item, idx) => (
               <div key={idx} className="flex gap-6 group">
-                <span className="text-4xl font-display font-bold text-brand/20 group-hover:text-brand/40 transition-colors">{item.step}</span>
+                <span className="text-4xl font-display font-bold text-brand/20 group-hover:text-brand/40 transition-colors">
+                  {item.step}
+                </span>
                 <div>
-                  <h4 className="text-xl font-semibold text-white mb-2">{item.title}</h4>
-                  <p className="text-zinc-400 text-sm leading-relaxed">{item.desc}</p>
+                  <h4 className="text-xl font-semibold text-white mb-2">
+                    {item.title}
+                  </h4>
+                  <p className="text-zinc-400 text-sm leading-relaxed">
+                    {item.desc}
+                  </p>
                 </div>
               </div>
             ))}
@@ -177,24 +203,28 @@ export default function Home() {
               <span className="text-gradient">Regulatory Standards</span>
             </h2>
             <p className="text-lg text-zinc-400 leading-relaxed">
-              Unlike traditional mixers, zkVVM is built for the real world.
-              Our unique <span className="text-white font-semibold">Viewing Key</span> architecture
-              bridges the gap between complete financial anonymity and the need for
-              granular, selective disclosure.
+              Unlike traditional mixers, zkVVM is built for the real world. Our
+              unique{" "}
+              <span className="text-white font-semibold">Viewing Key</span>{" "}
+              architecture bridges the gap between complete financial anonymity
+              and the need for granular, selective disclosure.
             </p>
 
             <div className="space-y-6">
               {[
                 {
-                  title: 'Selective Disclosure',
-                  desc: 'Generate read-only keys for specific blocks or date ranges to share with auditors without compromising your entire history.'
+                  title: "Selective Disclosure",
+                  desc: "Generate read-only keys for specific blocks or date ranges to share with auditors without compromising your entire history.",
                 },
                 {
-                  title: 'Zk-Proof of Compliance',
-                  desc: 'Prove you haven’t transacted with sanctioned addresses without revealing who you actually sent money to.'
-                }
+                  title: "Zk-Proof of Compliance",
+                  desc: "Prove you haven’t transacted with sanctioned addresses without revealing who you actually sent money to.",
+                },
               ].map((item, idx) => (
-                <div key={idx} className="flex gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-brand/10 transition-colors">
+                <div
+                  key={idx}
+                  className="flex gap-4 p-4 rounded-2xl bg-white/5 border border-white/5 hover:border-brand/10 transition-colors"
+                >
                   <div className="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center shrink-0">
                     <span className="text-brand font-bold">0{idx + 1}</span>
                   </div>
@@ -224,8 +254,12 @@ export default function Home() {
                       <Shield size={20} className="text-brand" />
                     </div>
                     <div>
-                      <p className="text-sm font-bold text-white">Viewing Key Export</p>
-                      <p className="text-[10px] text-zinc-500 uppercase tracking-tighter">Selective Audit Access</p>
+                      <p className="text-sm font-bold text-white">
+                        Viewing Key Export
+                      </p>
+                      <p className="text-[10px] text-zinc-500 uppercase tracking-tighter">
+                        Selective Audit Access
+                      </p>
                     </div>
                   </div>
                   <div className="px-3 py-1 bg-zinc-900 rounded-lg text-[10px] font-mono text-zinc-400 border border-zinc-800">
@@ -239,12 +273,18 @@ export default function Home() {
                     <span>Permissions</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-xs font-mono text-zinc-400">IRS_REVENUE_SERVICE_0x...</span>
-                    <span className="px-2 py-0.5 bg-brand/10 text-brand text-[9px] font-bold rounded">READ_ONLY</span>
+                    <span className="text-xs font-mono text-zinc-400">
+                      IRS_REVENUE_SERVICE_0x...
+                    </span>
+                    <span className="px-2 py-0.5 bg-brand/10 text-brand text-[9px] font-bold rounded">
+                      READ_ONLY
+                    </span>
                   </div>
                   <div className="h-px bg-white/5" />
                   <div className="space-y-2">
-                    <p className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest">Shareable Proof Hash</p>
+                    <p className="text-[10px] text-zinc-500 uppercase font-bold tracking-widest">
+                      Shareable Proof Hash
+                    </p>
                     <div className="p-3 bg-zinc-900/50 rounded-xl font-mono text-xs text-brand truncate">
                       vk_vvm_77a2f910e82b7c4d5e6f1a2b3c4d5e6f...
                     </div>
@@ -253,11 +293,15 @@ export default function Home() {
 
                 <Button className="w-full gap-2 shadow-[0_0_20px_rgba(0,255,163,0.1)] group">
                   Generate Compliance Key
-                  <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight
+                    size={16}
+                    className="group-hover:translate-x-1 transition-transform"
+                  />
                 </Button>
 
                 <p className="text-center text-[10px] text-zinc-600">
-                  Disclosure is strictly user-initiated. zkVVM holds no master keys.
+                  Disclosure is strictly user-initiated. zkVVM holds no master
+                  keys.
                 </p>
               </div>
             </div>
@@ -269,18 +313,25 @@ export default function Home() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8 py-32 text-center">
         <div className="glass p-16 rounded-[48px] bg-linear-to-b from-white/5 to-transparent relative overflow-hidden group">
           <div className="absolute inset-0 bg-brand/5 blur-[100px] -z-10 group-hover:bg-brand/10 transition-colors" />
-          <h2 className="text-4xl font-display font-bold text-white mb-6">Redefining Private Infrastructure</h2>
-          <p className="text-zinc-400 mb-10 max-w-xl mx-auto">Build the future of zkVVM at ETHDenver 2026. Complete privacy without dedicated L2 sequencer networks.</p>
+          <h2 className="text-4xl font-display font-bold text-white mb-6">
+            Redefining Private Infrastructure
+          </h2>
+          <p className="text-zinc-400 mb-10 max-w-xl mx-auto">
+            Build the future of zkVVM at ETHDenver 2026. Complete privacy
+            without dedicated L2 sequencer networks.
+          </p>
           <div className="flex justify-center gap-4">
             <Link href="/dashboard">
               <Button size="lg">Get Started</Button>
             </Link>
             <Link href="/docs">
-              <Button variant="outline" size="lg">Explore Circuitry</Button>
+              <Button variant="outline" size="lg">
+                Explore Circuitry
+              </Button>
             </Link>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }

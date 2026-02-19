@@ -51,7 +51,7 @@ export default function Withdraw() {
                     >
                         <Card className="p-10 border-brand/5 shadow-2xl">
                             <div className="mb-8">
-                                <h1 className="text-3xl font-display font-bold mb-2">zkVVM Executor</h1>
+                                <h1 className="text-3xl font-display font-bold mb-2">Redeem zkVVM Notes</h1>
                                 <p className="text-zinc-500">Redeem your shielded commitment via ZK-Proof verification.</p>
                             </div>
 
