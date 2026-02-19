@@ -33,7 +33,7 @@ export default function Navbar() {
                 initial={{ y: -20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 className={clsx(
-                    'w-full max-w-7xl px-8 py-4 rounded-3xl flex items-center justify-between border border-white/0 transition-all duration-500',
+                    'w-full max-w-7xl px-4 py-2 rounded-3xl flex items-center justify-between border border-white/0 transition-all duration-500',
                     scrolled ? 'glass-dark shadow-2xl scale-[0.98] border-white/5' : 'bg-transparent'
                 )}
             >

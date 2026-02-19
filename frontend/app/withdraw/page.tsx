@@ -39,12 +39,7 @@ export default function Withdraw() {
     }
 
     return (
-        <div className="max-w-2xl mx-auto px-6 py-24">
-            <Link href="/dashboard" className="inline-flex items-center gap-2 text-zinc-500 hover:text-white transition-colors mb-8 group">
-                <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-                Back to Virtual Dashboard
-            </Link>
-
+        <div className="max-w-2xl mx-auto px-6 pt-32 pb-24">
             <AnimatePresence mode="wait">
                 {step === 'input' && (
                     <motion.div
@@ -55,7 +50,7 @@ export default function Withdraw() {
                     >
                         <Card className="p-10">
                             <div className="mb-8">
-                                <h1 className="text-3xl font-display font-bold mb-2">Fisher Relay</h1>
+                                <h1 className="text-3xl font-display font-bold mb-2">ZK Withdraw</h1>
                                 <p className="text-zinc-500">Submit your off-chain proof for EMVM executor verification.</p>
                             </div>
 

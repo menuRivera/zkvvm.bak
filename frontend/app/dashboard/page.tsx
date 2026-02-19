@@ -97,11 +97,11 @@ export default function Dashboard() {
                     <Card className="sticky top-32">
                         <h3 className="text-xl font-display font-semibold mb-6 flex items-center gap-2">
                             <Zap size={20} className="text-brand" />
-                            Initiate ZK Flow
+							ZK Transfer
                         </h3>
                         <form onSubmit={handleCreatePayment} className="space-y-6">
                             <Input
-                                label="Amount (VVM)"
+                                label="Amount (ETH)"
                                 placeholder="0.00"
                                 value={amount}
                                 onChange={(e) => setAmount(e.target.value)}
