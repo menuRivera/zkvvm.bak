@@ -7,6 +7,8 @@ import { clsx } from 'clsx'
 import { Wallet } from 'lucide-react'
 import { useState, useEffect } from 'react'
 
+import ConnectButton from './ConnectButton'
+
 export default function Navbar() {
     const pathname = usePathname()
     const [scrolled, setScrolled] = useState(false)
@@ -62,7 +64,7 @@ export default function Navbar() {
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <appkit-button />
+                    <ConnectButton />
                 </div>
             </motion.div>
         </nav>

@@ -8,6 +8,7 @@ import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import { useAccount } from 'wagmi'
 import Link from 'next/link'
+import ConnectButton from '@/components/ConnectButton'
 
 export default function Withdraw() {
     const { isConnected } = useAccount()
@@ -32,7 +33,7 @@ export default function Withdraw() {
             <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
                 <ShieldCheck size={64} className="text-zinc-700" />
                 <h2 className="text-2xl font-display font-semibold">Connect your wallet</h2>
-                <appkit-button />
+                <ConnectButton />
             </div>
         )
     }

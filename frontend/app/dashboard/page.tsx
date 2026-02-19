@@ -8,6 +8,7 @@ import Button from '@/components/ui/Button'
 import Input from '@/components/ui/Input'
 import { parseUnits } from 'viem'
 import { useAccount } from 'wagmi'
+import ConnectButton from '@/components/ConnectButton'
 
 export default function Dashboard() {
     const { isConnected, address } = useAccount()
@@ -35,7 +36,7 @@ export default function Dashboard() {
                     Please connect your wallet to access the secure payment dashboard
                     and start generating ZK-compliant transactions.
                 </p>
-                <appkit-button />
+                <ConnectButton />
             </div>
         )
     }
