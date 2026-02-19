@@ -1,0 +1,133 @@
+'use client'
+
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ArrowLeft, Download, ShieldCheck, Key, AlertCircle } from 'lucide-react'
+import Card from '@/components/ui/Card'
+import Button from '@/components/ui/Button'
+import Input from '@/components/ui/Input'
+import { useAccount } from 'wagmi'
+import Link from 'next/link'
+
+export default function Withdraw() {
+    const { isConnected } = useAccount()
+    const [proofId, setProofId] = useState('')
+    const [isVerifying, setIsVerifying] = useState(false)
+    const [step, setStep] = useState<'input' | 'verifying' | 'success'>('input')
+
+    const handleWithdraw = async (e: React.FormEvent) => {
+        e.preventDefault()
+        setStep('verifying')
+        setIsVerifying(true)
+
+        // Simulate ZK-proof verification on evvm.org
+        await new Promise(resolve => setTimeout(resolve, 3000))
+
+        setIsVerifying(false)
+        setStep('success')
+    }
+
+    if (!isConnected) {
+        return (
+            <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+                <ShieldCheck size={64} className="text-zinc-700" />
+                <h2 className="text-2xl font-display font-semibold">Connect your wallet</h2>
+                <appkit-button />
+            </div>
+        )
+    }
+
+    return (
+        <div className="max-w-2xl mx-auto px-6 py-24">
+            <Link href="/dashboard" className="inline-flex items-center gap-2 text-zinc-500 hover:text-white transition-colors mb-8 group">
+                <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+                Back to Dashboard
+            </Link>
+
+            <AnimatePresence mode="wait">
+                {step === 'input' && (
+                    <motion.div
+                        key="input"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                    >
+                        <Card className="p-10">
+                            <div className="mb-8">
+                                <h1 className="text-3xl font-display font-bold mb-2">Withdraw Funds</h1>
+                                <p className="text-zinc-500">Enter your ZK-proof ID to verify and withdraw funds.</p>
+                            </div>
+
+                            <form onSubmit={handleWithdraw} className="space-y-6">
+                                <Input
+                                    label="ZK-Proof Identifier"
+                                    placeholder="zk_proof_hash_..."
+                                    value={proofId}
+                                    onChange={(e) => setProofId(e.target.value)}
+                                    required
+                                />
+
+                                <div className="flex items-start gap-3 p-4 bg-zinc-900 rounded-xl border border-zinc-800">
+                                    <AlertCircle size={18} className="text-zinc-500 mt-0.5" />
+                                    <p className="text-xs text-zinc-500 leading-relaxed">
+                                        Withdrawals are processed through the evvm.org ZK-vvm circuit.
+                                        Ensure you have the correct proof ID associated with your address.
+                                    </p>
+                                </div>
+
+                                <Button type="submit" className="w-full gap-2" size="lg">
+                                    Verify & Withdraw
+                                    <Download size={18} />
+                                </Button>
+                            </form>
+                        </Card>
+                    </motion.div>
+                )}
+
+                {step === 'verifying' && (
+                    <motion.div
+                        key="verifying"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="flex flex-col items-center justify-center py-20 gap-8"
+                    >
+                        <div className="relative">
+                            <div className="w-24 h-24 rounded-full border-4 border-zinc-800 border-t-brand animate-spin" />
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <ShieldCheck size={32} className="text-brand" />
+                            </div>
+                        </div>
+                        <div className="text-center space-y-2">
+                            <h2 className="text-2xl font-display font-semibold">Verifying Proof</h2>
+                            <p className="text-zinc-500">Contacting evvm.org compliance circuits...</p>
+                        </div>
+                    </motion.div>
+                )}
+
+                {step === 'success' && (
+                    <motion.div
+                        key="success"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="text-center space-y-8 py-10"
+                    >
+                        <div className="flex justify-center">
+                            <div className="w-20 h-20 bg-brand/10 rounded-full flex items-center justify-center text-brand">
+                                <ShieldCheck size={40} />
+                            </div>
+                        </div>
+                        <div className="space-y-2">
+                            <h2 className="text-3xl font-display font-bold">Transfer Successful</h2>
+                            <p className="text-zinc-400">Funds have been released to your wallet address.</p>
+                        </div>
+                        <div className="flex justify-center pt-4">
+                            <Button onClick={() => setStep('input')} variant="outline">
+                                Perform another withdrawal
+                            </Button>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
+    )
+}

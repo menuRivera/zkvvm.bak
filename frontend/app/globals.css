@@ -5,11 +5,41 @@
   --foreground: #171717;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+
+  --color-brand: #00ffa3;
+  --color-zinc-950: #09090b;
+  --color-zinc-900: #18181b;
+  --color-zinc-800: #27272a;
+}
+
+@layer base {
+  body {
+    @apply bg-zinc-950 text-zinc-50;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display tracking-tight font-medium;
+  }
+}
+
+.glass {
+  @apply bg-zinc-50/5 backdrop-blur-xl border border-zinc-50/10;
+}
+
+.glass-dark {
+  @apply bg-black/40 backdrop-blur-2xl border border-white/5;
+}
+
+.text-gradient {
+  @apply bg-clip-text text-transparent bg-linear-to-r from-zinc-50 via-zinc-300 to-zinc-500;
 }
 
 @media (prefers-color-scheme: dark) {

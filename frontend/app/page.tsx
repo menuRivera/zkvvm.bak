@@ -1,65 +1,110 @@
-import Image from "next/image";
+'use client'
+
+import { motion } from 'framer-motion'
+import { Shield, Zap, Lock, ArrowRight } from 'lucide-react'
+import Button from '@/components/ui/Button'
+import Link from 'next/link'
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div className="relative isolate px-6 pt-14 lg:px-8 overflow-hidden">
+      {/* Background Blobs */}
+      <div className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
+        <div className="relative left-[calc(50%-11rem)] aspect-1155/678 w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-linear-to-tr from-brand to-[#9089fc] opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]" />
+      </div>
+
+      <div className="mx-auto max-w-4xl py-12 sm:py-24 lg:py-32">
+        <div className="text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+            className="mb-8 flex justify-center"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <div className="relative rounded-full px-3 py-1 text-sm leading-6 text-zinc-400 ring-1 ring-white/10 hover:ring-white/20 transition-all">
+              Announcing our ZK-Compliant Payment Protocol.{" "}
+              <a href="#" className="font-semibold text-brand">
+                Read more <span aria-hidden="true">&rarr;</span>
+              </a>
+            </div>
+          </motion.div>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            className="text-6xl font-display font-bold tracking-tight text-white sm:text-7xl lg:text-8xl"
           >
-            Documentation
-          </a>
+            <span className="text-gradient">Secure Payments</span>
+            <br />
+            Built with ZK-Proof
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+            className="mt-8 text-lg leading-8 text-zinc-400 max-w-2xl mx-auto"
+          >
+            ZK-vvm provides a zero-knowledge compliant infrastructure for
+            private, secure, and regulatory-ready financial transactions on-chain.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
+            className="mt-12 flex items-center justify-center gap-x-6"
+          >
+            <Link href="/dashboard">
+              <Button size="lg" className="gap-2">
+                Launch App <ArrowRight size={18} />
+              </Button>
+            </Link>
+            <Link href="/docs" className="text-sm font-semibold leading-6 text-white hover:text-zinc-300 transition-colors">
+              Read Documentation <span aria-hidden="true">→</span>
+            </Link>
+          </motion.div>
         </div>
-      </main>
+      </div>
+
+      {/* Feature Grid */}
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 pb-32">
+        <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+          {[
+            {
+              name: 'Privacy First',
+              description: 'All transactions are shielded using zero-knowledge proofs, ensuring your data remains private.',
+              icon: Shield
+            },
+            {
+              name: 'Instant Verification',
+              description: 'Proofs are generated and verified in milliseconds, providing instant settlement.',
+              icon: Zap
+            },
+            {
+              name: 'Compliance Ready',
+              description: 'Built-in hooks for regulatory oversight without compromising user privacy.',
+              icon: Lock
+            }
+          ].map((feature, idx) => (
+            <motion.div
+              key={feature.name}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 * idx, duration: 0.5 }}
+              viewport={{ once: true }}
+              className="glass p-8 rounded-3xl"
+            >
+              <div className="mb-6 flex h-10 w-10 items-center justify-center rounded-lg bg-brand">
+                <feature.icon className="h-6 w-6 text-black" aria-hidden="true" />
+              </div>
+              <p className="text-lg font-display font-semibold leading-7 text-white">{feature.name}</p>
+              <p className="mt-2 text-sm leading-7 text-zinc-400">{feature.description}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
     </div>
-  );
+  )
 }
