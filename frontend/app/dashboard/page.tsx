@@ -11,20 +11,29 @@ import { useAccount } from 'wagmi'
 import ConnectButton from '@/components/ConnectButton'
 
 export default function Dashboard() {
-    const { isConnected, address } = useAccount()
+    const { isConnected } = useAccount()
     const [amount, setAmount] = useState('')
-    const [recipient, setRecipient] = useState('')
     const [isCreating, setIsCreating] = useState(false)
+    const [note, setNote] = useState<string | null>(null)
+    const [showNote, setShowNote] = useState(false)
 
-    const handleCreatePayment = async (e: React.FormEvent) => {
+    const generateNote = () => {
+        const secret = Array.from(crypto.getRandomValues(new Uint8Array(16)))
+            .map(b => b.toString(16).padStart(2, '0')).join('')
+        const nullifier = Array.from(crypto.getRandomValues(new Uint8Array(16)))
+            .map(b => b.toString(16).padStart(2, '0')).join('')
+        return `zkvvm-note-${secret}-${nullifier}`
+    }
+
+    const handleWithdraw = async (e: React.FormEvent) => {
         e.preventDefault()
         setIsCreating(true)
-        // Simulate ZK-proof generation and transaction
-        await new Promise(resolve => setTimeout(resolve, 2000))
-        console.log('Payment created:', { amount, recipient })
+        // Simulate commitment and state update
+        await new Promise(resolve => setTimeout(resolve, 2500))
+        const newNote = generateNote()
+        setNote(newNote)
+        setShowNote(true)
         setIsCreating(false)
-        setAmount('')
-        setRecipient('')
     }
 
     if (!isConnected) {
@@ -47,46 +56,53 @@ export default function Dashboard() {
                 {/* Main Content */}
                 <div className="flex-1 space-y-8">
                     <header>
-                        <h1 className="text-4xl font-display font-bold text-gradient">Virtual State</h1>
-                        <p className="text-zinc-500 mt-2">Manage your infrastructure-less blockchain interactions</p>
+                        <h1 className="text-4xl font-display font-bold text-gradient">zkVVM Explorer</h1>
+                        <p className="text-zinc-500 mt-2">Manage your virtual state and private commitments</p>
                     </header>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <Card className="flex flex-col gap-4">
+                        <Card className="flex flex-col gap-4 group hover:border-brand/20 transition-colors">
                             <div className="flex items-center justify-between">
-                                <span className="text-sm font-medium text-zinc-400">Virtual Balance</span>
+                                <span className="text-sm font-medium text-zinc-400 font-mono tracking-tighter">VIRTUAL_BALANCE</span>
                                 <div className="p-2 bg-brand/10 rounded-lg">
                                     <ShieldCheck size={18} className="text-brand" />
                                 </div>
                             </div>
-                            <p className="text-3xl font-display font-bold">0.00 <span className="text-zinc-500 text-lg">VVM</span></p>
-                            <p className="text-xs text-brand font-medium">Synced with EMVM Executor</p>
+                            <p className="text-3xl font-display font-bold">0.00 <span className="text-zinc-500 text-lg font-mono">ETH</span></p>
+                            <p className="text-xs text-brand font-bold uppercase tracking-widest bg-brand/5 px-2 py-1 rounded-sm w-fit">Synced</p>
                         </Card>
 
                         <Card className="flex flex-col gap-4">
                             <div className="flex items-center justify-between">
-                                <span className="text-sm font-medium text-zinc-400">Generated Proofs</span>
+                                <span className="text-sm font-medium text-zinc-400 font-mono tracking-tighter">MERKLE_ROOT</span>
                                 <div className="p-2 bg-zinc-800 rounded-lg">
                                     <History size={18} className="text-zinc-400" />
                                 </div>
                             </div>
-                            <p className="text-3xl font-display font-bold">0</p>
-                            <p className="text-xs text-zinc-500">Virtual state updates: 0</p>
+                            <p className="text-xs font-mono text-zinc-500 truncate select-all cursor-pointer hover:text-white transition-colors">
+                                0x77a2f910e82b7c4d5e6f1a2b3c4d5e6f...
+                            </p>
+                            <p className="text-[10px] text-zinc-600 font-bold uppercase tracking-[0.2em]">Global Chain State</p>
                         </Card>
                     </div>
 
                     <section className="space-y-4">
                         <div className="flex items-center justify-between">
-                            <h3 className="text-xl font-display font-semibold">Relayed Transactions</h3>
-                            <Button variant="outline" size="sm" className="gap-2">
+                            <h3 className="text-xl font-display font-semibold">Your Commitments</h3>
+                            <Button variant="outline" size="sm" className="gap-2 font-mono text-[10px] tracking-widest">
                                 <Key size={14} />
-                                Export Viewing Key
+                                EXPORT_VIEWING_KEY
                             </Button>
                         </div>
-                        <Card className="p-0 overflow-hidden">
-                            <div className="p-8 text-center text-zinc-500 flex flex-col items-center gap-2">
-                                <History size={32} strokeWidth={1.5} />
-                                <p>No virtual state updates recorded</p>
+                        <Card className="p-0 overflow-hidden border-white/5 bg-zinc-900/30">
+                            <div className="p-12 text-center text-zinc-500 flex flex-col items-center gap-4">
+                                <div className="p-4 bg-zinc-800/50 rounded-full border border-zinc-700/50">
+                                    <History size={32} strokeWidth={1.5} className="text-zinc-600" />
+                                </div>
+                                <div className="space-y-1">
+                                    <p className="text-white font-semibold">No active commitments</p>
+                                    <p className="text-xs">Deposit assets into the zkVVM Vault to start.</p>
+                                </div>
                             </div>
                         </Card>
                     </section>
@@ -94,45 +110,82 @@ export default function Dashboard() {
 
                 {/* Sidebar: ZK Flow Initiation */}
                 <div className="w-full md:w-96">
-                    <Card className="sticky top-32">
-                        <h3 className="text-xl font-display font-semibold mb-6 flex items-center gap-2">
-                            <Zap size={20} className="text-brand" />
-							ZK Transfer
-                        </h3>
-                        <form onSubmit={handleCreatePayment} className="space-y-6">
-                            <Input
-                                label="Amount (ETH)"
-                                placeholder="0.00"
-                                value={amount}
-                                onChange={(e) => setAmount(e.target.value)}
-                                required
-                            />
-                            <Input
-                                label="Recipient Virtual Address"
-                                placeholder="0x..."
-                                value={recipient}
-                                onChange={(e) => setRecipient(e.target.value)}
-                                required
-                            />
-                            <div className="p-4 bg-brand/5 border border-brand/10 rounded-xl space-y-2">
-                                <div className="flex items-center gap-2 text-brand text-xs font-bold uppercase tracking-wider">
-                                    <ShieldCheck size={12} />
-                                    Off-Chain Prover
-                                </div>
-                                <p className="text-xs text-zinc-400 leading-relaxed">
-                                    Proofs are generated locally to obscure sender, receiver, and amount.
-                                    Transactions are relayed gasless via Fishers.
-                                </p>
-                            </div>
-                            <Button
-                                type="submit"
-                                className="w-full gap-2"
-                                disabled={isCreating}
+                    <Card className="sticky top-32 border-brand/10 shadow-[0_0_40px_rgba(0,255,163,0.05)]">
+                        {!showNote ? (
+                            <>
+                                <h3 className="text-xl font-display font-semibold mb-6 flex items-center gap-2">
+                                    <Zap size={20} className="text-brand" />
+                                    zkVVM Vault
+                                </h3>
+                                <form onSubmit={handleWithdraw} className="space-y-6">
+                                    <Input
+                                        label="Deposit Amount (ETH)"
+                                        placeholder="0.00"
+                                        value={amount}
+                                        onChange={(e) => setAmount(e.target.value)}
+                                        required
+                                    />
+
+                                    <div className="p-4 bg-brand/5 border border-brand/20 rounded-2xl space-y-3">
+                                        <div className="flex items-center gap-2 text-brand text-[10px] font-black uppercase tracking-[0.2em]">
+                                            <ShieldCheck size={12} />
+                                            Protocol Security
+                                        </div>
+                                        <p className="text-xs text-zinc-400 leading-relaxed font-medium">
+                                            Generating a new Merkle commitment. Funds will be locked by a hashed Secret + Nullifier.
+                                        </p>
+                                    </div>
+
+                                    <Button
+                                        type="submit"
+                                        className="w-full gap-2 shadow-[0_5px_20px_rgba(0,255,163,0.15)]"
+                                        disabled={isCreating}
+                                    >
+                                        {isCreating ? 'Minting Commitment...' : 'Mint Commitment'}
+                                        <Zap size={16} />
+                                    </Button>
+                                </form>
+                            </>
+                        ) : (
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                className="space-y-6 text-center"
                             >
-                                {isCreating ? 'Computing Proof...' : 'Initiate Secure Flow'}
-                                <Send size={16} />
-                            </Button>
-                        </form>
+                                <div className="w-16 h-16 bg-brand/20 rounded-full flex items-center justify-center mx-auto mb-2 text-brand shadow-[0_0_30px_rgba(0,255,163,0.2)]">
+                                    <ShieldCheck size={32} />
+                                </div>
+                                <div>
+                                    <h3 className="text-xl font-display font-bold text-white mb-2">Commitment Minted</h3>
+                                    <p className="text-xs text-zinc-500 font-medium">Your zkVVM Note is ready. Store it securely; it is the only way to withdraw your funds.</p>
+                                </div>
+
+                                <div className="p-4 bg-zinc-900 border border-white/10 rounded-2xl space-y-2 relative group overflow-hidden">
+                                    <div className="absolute inset-0 bg-brand/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                    <p className="text-[10px] text-zinc-600 font-black uppercase tracking-widest text-left">Your zkVVM Note</p>
+                                    <div className="font-mono text-sm text-brand break-all select-all pt-1 relative z-10">
+                                        {note}
+                                    </div>
+                                </div>
+
+                                <Button
+                                    onClick={() => {
+                                        navigator.clipboard.writeText(note || '')
+                                        // Simple feedback could be added here
+                                    }}
+                                    className="w-full gap-2"
+                                >
+                                    Copy Securely
+                                </Button>
+
+                                <button
+                                    onClick={() => setShowNote(false)}
+                                    className="text-xs text-zinc-500 hover:text-white transition-colors underline underline-offset-4"
+                                >
+                                    Make Another Deposit
+                                </button>
+                            </motion.div>
+                        )}
                     </Card>
                 </div>
             </div>

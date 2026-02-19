@@ -23,8 +23,8 @@ export default function Navbar() {
 
     const navLinks = [
         { name: 'Home', href: '/' },
-        { name: 'Dashboard', href: '/dashboard' },
-        { name: 'Withdraw', href: '/withdraw' }
+        { name: 'Explorer', href: '/dashboard' },
+        { name: 'Executor', href: '/withdraw' }
     ]
 
     return (
@@ -43,7 +43,7 @@ export default function Navbar() {
                             <span className="text-black font-bold text-xs">ZK</span>
                         </div>
                         <span className="font-display font-semibold tracking-tight text-lg">
-                            vvm
+                            zkVVM
                         </span>
                     </Link>
 

@@ -46,8 +46,8 @@ export default function Home() {
             transition={{ delay: 0.3, duration: 0.6 }}
             className="mt-8 text-lg leading-8 text-zinc-400 max-w-2xl mx-auto font-medium"
           >
-            An infrastructure-less, privacy-focused virtual blockchain running
-            entirely within a smart contract "executor." Decouple privacy from consensus.
+            A stateless, privacy-focused virtual machine running within a smart contract "executor."
+            Lock ETH into commitments and transfer them securely via off-chain <span className="text-white">zkVVM Notes</span>.
           </motion.p>
 
           <motion.div
@@ -73,18 +73,18 @@ export default function Home() {
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
           {[
             {
-              name: 'The Shield (ZK Flow)',
-              description: 'Generate ZK-SNARK proofs off-chain to obscure sender, receiver, and amount. No sensitive data leaves your client.',
+              name: 'The Mint (Deposit)',
+              description: 'Lock ETH into the virtual machine by generating a cryptographic commitment. Your identity remains shielded from the start.',
               icon: Shield
             },
             {
-              name: 'The Fisher Network',
-              description: 'Infrastructure-less relay layer. Fishers relay proofs gasless-ly and get rewarded for securing the virtual state.',
+              name: 'The Note (Handoff)',
+              description: 'Transfer value securely off-chain. The zkVVM Note represents your assets and can be handed off with zero trace on the blockchain.',
               icon: Zap
             },
             {
-              name: 'The Key (Compliance)',
-              description: 'Selective disclosure via read-only Viewing Keys. Share granular access with auditors without exposing public history.',
+              name: 'The Spend (Withdraw)',
+              description: 'Redeem your Note from the zkVVM Executor by generating a ZK-SNARK proof. No link is ever created between deposit and withdrawal.',
               icon: Lock
             }
           ].map((feature, idx) => (
@@ -106,18 +106,30 @@ export default function Home() {
         </div>
       </div>
 
-      {/* How it Works */}
+      {/* How it Works / The Flow */}
       <div className="mx-auto max-w-7xl px-6 lg:px-8 py-32">
         <div className="mx-auto max-w-2xl text-center mb-20">
-          <h2 className="text-3xl font-display font-bold tracking-tight text-white sm:text-4xl text-gradient">System Architecture</h2>
-          <p className="mt-4 text-lg text-zinc-400">Decoupling privacy execution from consensus through the EVVM.</p>
+          <h2 className="text-3xl font-display font-bold tracking-tight text-white sm:text-4xl text-gradient">The zkVVM Flow</h2>
+          <p className="mt-4 text-lg text-zinc-400">Decoupling privacy from consensus through a stateless Note-based architecture.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
             {[
-              { step: '01', title: 'Virtual Settlement', desc: 'The "Virtual Chain" lives inside a host L1/L2 smart contract, maintaining the Merkle Root of the private state.' },
-              { step: '02', title: 'Off-Chain Proving', desc: 'Users compute ZK proofs locally (browser/WASM), generating commitments that never leak transaction details.' },
-              { step: '03', title: 'Fisher Relay', desc: 'Relayers pick up proofs from the mempool, pay host gas, and get reimbursed from shielded transaction fees.' }
+              {
+                step: '01',
+                title: 'Deposit (Minting)',
+                desc: 'Generate a local Secret and Nullifier. Submit their hashed commitment with 1 ETH to lock funds into the Merkle Vault.'
+              },
+              {
+                step: '02',
+                title: 'Handoff (Off-Chain)',
+                desc: 'The zkVVM Note is shared securely off-chain. The blockchain records zero data about this transfer, ensuring absolute privacy.'
+              },
+              {
+                step: '03',
+                title: 'Withdraw (Spending)',
+                desc: 'The receiver generates a ZK proof of secret knowledge to unlock funds to a new address. The Nullifier is recorded to prevent double-spending.'
+              }
             ].map((item, idx) => (
               <div key={idx} className="flex gap-6 group">
                 <span className="text-4xl font-display font-bold text-brand/20 group-hover:text-brand/40 transition-colors">{item.step}</span>
@@ -135,9 +147,9 @@ export default function Home() {
                 <Shield className="w-12 h-12 text-brand" />
               </div>
               <p className="text-zinc-500 text-sm font-mono tracking-tighter">
-                EXECUTOR: [EVVM_SMART_CONTRACT] <br />
-                STATE: [SHIELDED_MERKLE_TREE] <br />
-                CONSENSUS: [DECOUPLED_ZK_SETTLEMENT]
+                INPUT: [SECRET + NULLIFIER] <br />
+                STATE: [Merkle_Commitment] <br />
+                OUTPUT: [ZK_Spending_Proof]
               </p>
             </div>
           </div>
