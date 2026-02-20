@@ -2,6 +2,7 @@ import { IDepositData, IWithdrawData } from "@/types/zkVVM.types";
 import {
   BaseService,
   HexString,
+  IPayData,
   ISigner,
   SignedAction,
   SignMethod,
@@ -22,11 +23,15 @@ export class zkVVM extends BaseService {
   async deposit({
     commitment,
     amount,
+    originExecutor = zeroAddress,
     nonce,
+    evvmSignedAction,
   }: {
     commitment: string;
     amount: bigint;
+    originExecutor?: HexString;
     nonce: bigint;
+    evvmSignedAction: SignedAction<IPayData>;
   }): Promise<SignedAction<IDepositData>> {
     const evvmId = await this.getEvvmID();
     const functionName = "deposit";
@@ -37,7 +42,7 @@ export class zkVVM extends BaseService {
     const message = this.buildMessageToSign(
       evvmId,
       hashPayload,
-      zeroAddress,
+      originExecutor,
       nonce,
       true,
     );
@@ -45,30 +50,36 @@ export class zkVVM extends BaseService {
     const signature = await this.signer.signMessage(message);
 
     return new SignedAction(this, evvmId, functionName, {
+      user: this.signer.address,
       commitment,
       amount,
+      originExecutor,
       nonce,
       signature,
+      priorityFeePay: evvmSignedAction.data.priorityFee,
+      noncePay: evvmSignedAction.data.nonce,
+      signaturePay: evvmSignedAction.data.signature,
     });
   }
 
   @SignMethod
   async withdraw({
     proof,
-    recipient,
-    inputs,
+    publicInputs,
+    originExecutor = zeroAddress,
     nonce,
   }: {
     proof: string;
     recipient: HexString;
-    inputs: any[];
+    publicInputs: any[];
+    originExecutor?: HexString;
     nonce: bigint;
   }): Promise<SignedAction<IWithdrawData>> {
     const evvmId = await this.getEvvmID();
     const functionName = "withdraw";
+
     const hashPayload = this.buildHashPayload(functionName, {
       proof,
-      recipient,
     });
     const message = this.buildMessageToSign(
       evvmId,
@@ -81,8 +92,10 @@ export class zkVVM extends BaseService {
     const signature = await this.signer.signMessage(message);
 
     return new SignedAction(this, evvmId, functionName, {
+      user: this.signer.address,
       proof,
-      inputs,
+      publicInputs,
+      originExecutor,
       nonce,
       signature,
     });

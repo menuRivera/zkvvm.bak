@@ -30,7 +30,7 @@ interface Note {
 
 export default function Dashboard() {
   const { isConnected } = useAccount();
-  const [asset, setAsset] = useState("USDC");
+  const [asset, setAsset] = useState("MATE");
   const [amount, setAmount] = useState("100.00");
   const [isCreating, setIsCreating] = useState(false);
   const [notes, setNotes] = useState<Note[]>([
@@ -114,7 +114,8 @@ export default function Dashboard() {
                   onChange={(e) => setAsset(e.target.value)}
                   className="w-full bg-zinc-900 border border-white/5 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand/50 transition-colors cursor-pointer font-medium appearance-none"
                 >
-                  <option value="USDC">USDC (v)</option>
+                  <option value="MATE">MATE</option>
+                  <option value="USDC">USDC</option>
                   <option value="ETH">ETH</option>
                 </select>
               </div>
